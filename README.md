@@ -14,11 +14,13 @@
 * BCrypt
 * Flask JWT Extended
 
+* All of the following commands are based on running the application in a Linux Distribution (Ubunttu)
+
 ## Download MongoDB 
 MongoDb can be downloaded from the official website for your relevant OS (Windows/mac/linux). Follow the instructions provided on the webpage for setting up mongodb on your local machine. Once installed, install py-mongo to be able to interact with mongoDB via a pythong script.
 We recommend setting up a virtual environment so to ensure you have a self contained environment which will not affect your locally installed python packages
 
-* All of the following commands are based on running the application in a Linux Distribution (Ubunttu)
+## Environment Setup
 
 Setup a virtual environment
 
@@ -28,7 +30,7 @@ Activate your virtual environment
 
 `source activate /path/to/venv/file/bin/activate`
 
-Install the dependecies using the requirements.txt file i
+Install the dependecies using the requirements.txt file from the root directory
 
 `pip install -r requirements.txt`
 

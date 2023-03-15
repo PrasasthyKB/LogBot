@@ -1,5 +1,5 @@
 from mongoengine import ( Document, StringField, DateTimeField, FileField)
-
+import datetime
 
 class User_Document(Document):
     """
@@ -12,11 +12,14 @@ class User_Document(Document):
     :param timestamp: timestamp of entry
     """
     
-    user_id = StringField(required=True, unique=True)
-    document_id = StringField(required=True, unique=True)
-    document = FileField()
+    user_id = StringField(required=True)
+    document_id = StringField(required=True, unique= True)
+    document_name  = StringField(required=True)
+    chat_id = StringField(required=True)
+    document = StringField(required=False)
     document_summary = StringField(max_length=6000)
-    timestamp = DateTimeField()
+    document_tag = StringField(required =True)
+    timestamp = DateTimeField(default=datetime.datetime.utcnow)
     
     
     

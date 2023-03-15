@@ -11,12 +11,7 @@ class Small_Talk(Document):
     :param context: array of string that represents the context of the small talk
     """
     
-    tag = StringField(required=True)
+   
     patterns = ListField(StringField(max_length=100))
     responses = ListField(StringField(max_length=100))
-    context = ListField(StringField(max_length=100))
-
-    
-    
-    
-    
+ 

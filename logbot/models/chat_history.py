@@ -1,4 +1,5 @@
 from mongoengine import ( Document, StringField, DateTimeField,)
+import datetime
 
 
 class Chat_History(Document):
@@ -9,16 +10,17 @@ class Chat_History(Document):
     :param chat_id: unique required chat id
     :param query: question to ask chatbot
     :param response: chatbot response
-    :param documentId: required unique document id
+    :param documentId: document id
     :param timestamp: timestamp of entry
     """
     
-    user_id = StringField(required=True, unique=True)
-    chat_id = StringField(required=True, unique=True)
-    query = StringField(required=True)
+    user_id = StringField(required=True)
+    chat_id = StringField(required=True)
+    query = StringField(required=False)
     response = StringField(required=True)
-    document_id = StringField(required=True, unique=True)
-    timestamp = DateTimeField()
+    document_id = StringField(required=False)
+    timestamp = DateTimeField(default=datetime.datetime.utcnow)
+
     
     
     

@@ -26,16 +26,32 @@ During the meeting, several action points were discussed, including:
 
 
 ## Meeting 2.
-* **DATE:**
-* **ASSISTANTS:**
+* **DATE:** 22 - Feb -2023
+* **ASSISTANTS:** Ivan Sanchez Milara
 
 ### Minutes
 *Summary of what was discussed during the meeting*
+- The following individuals attended the meeting: Justin Seby, Prasasthy Balasubramanian, Kazi Haque, Talha Zeeshan
+- The tasks for Deadline 2 have been completed by the group. 
+- Mr. Ivan reviewed the project's wiki page and evaluated each item based on the criteria for evaluation.
+- The team discussed the duration required for each section of the project and allocated tasks to each member during the meeting. 
+- Mr. Ivan expressed his concern about use of state in the API and not meeting project requirements when it comes to API resources.
+- The team discussed the need to ensure that the REST API is being used appropriately and meets the project requirements
+
 
 ### Action points
 *List here the actions points discussed with assistants*
-
-
+- Add a document size limit to mongodb
+- make it clear that chat-history and small-talk tables are different.
+- reword loginprofile to user-profile. login gives impression of state -> not recommended way in API
+- Make API Stateless
+- clarify its only for linux in readme for db
+- add validation (something like type match)
+- check authentication (user only access their own data)
+- add script to populate db for testing (give access to jupyter notebook), explain instructions to use jupyter notebook for populating db
+- add put/post/delete apis (course requirements) 2 resources of each API call
+- add work distribution
+- add relationships in db file 
 
 
 ## Meeting 3.

@@ -14,7 +14,7 @@
 * BCrypt
 * Flask JWT Extended
 
-* All of the following commands are based on running the application in a Linux Distribution (Ubunttu)
+### NOTE: All of the following commands are based on running the application in a Linux Distribution (Ubunttu)
 
 ## Download MongoDB 
 MongoDb can be downloaded from the official website for your relevant OS (Windows/mac/linux). Follow the instructions provided on the webpage for setting up mongodb on your local machine. Once installed, install py-mongo to be able to interact with mongoDB via a pythong script.
@@ -53,6 +53,8 @@ To check the status and stop Mongodb instance
 
 ## Run the Flask Server
 Switch to the logbot directory and run the following command to start the Flask Server API
-`cd logbot`
-`python app.py`
+```bash
+    cd logbot
+    python app.py
+```
 

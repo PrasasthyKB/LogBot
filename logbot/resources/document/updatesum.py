@@ -9,7 +9,7 @@ import json
 from resources.errors import user_not_found, resource_already_exists
 
 
-class UpdateTag(Resource):
+class UpdateSum(Resource):
     @staticmethod
     @jwt_required()
     def patch() -> Response:
@@ -22,20 +22,27 @@ class UpdateTag(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
-            print(data["updatetag"])
+            doc_details = ''
+            try: 
+                doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
+            except KeyError:
+                abort(404)
+            print(data["updatesum"])
             
-            if data["updatetag"] == "True":
-                new_tag_gen = data.get('new_tag')
-                User_Document.objects(document_id=data.get('document_id')).update_one(set__document_tag=new_tag_gen)
+            if data["updatesum"] == "True":
+                new_summary_gen = data.get('new_summary')
+                User_Document.objects(document_id=data.get('document_id')).update_one(set__document_summary=new_summary_gen)
                 data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                 data_load_chat['user_id'] = user_details['user_id']
                 data_load_chat['chat_id']= doc_details['chat_id']
-                data_load_chat['query'] = "update tag"
-                data_load_chat['response'] = 'Successfully updated tag for the file'
+                data_load_chat['query'] = "update summary"
+                data_load_chat['response'] = 'Successfully updated summary for the file'
                 data_load_chat['document_id'] = doc_details['document_id']
                 chat_load = Chat_History(**data_load_chat)
-                chat_load.save()
+                try: 
+                    chat_load.save()
+                except KeyError:
+                    abort(400)
             query = []
             response = []
             timestamp_sort = []
@@ -48,7 +55,13 @@ class UpdateTag(Resource):
             doc_summary = []
             doc_tag = []
             doc_timestamp = []
-            for doc in User_Document.objects(user_id = user_details['user_id']):
+            
+            all_docs = User_Document.objects(user_id = user_details['user_id'])
+            
+            if all_docs is None:
+                abort(400)
+            
+            for doc in all_docs:
                 doc_details = (json.loads((doc).to_json()))
                 doc_name.append(doc_details['document_name'])
                 doc_summary.append(doc_details['document_summary'])
@@ -65,5 +78,6 @@ class UpdateTag(Resource):
                     'doc_summaries': doc_details['document_summary'],
                     'doc_tag': doc_details['document_tag'],
                     'doc_timestamp' : doc_details['timestamp'] }
-                }  
+                } 
         return Response(json.dumps(session_response), 200)
+    

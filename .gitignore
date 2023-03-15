@@ -2,3 +2,7 @@ logbot/__pycache__
 logbot/resources/__pycache__
 logbot/models/__pycache__
 logbot/db/__pycache__
+logbot/resources/document/__pycache__
+logbot/resources/small_talk/__pycache__
+logbot/resources/user/__pycache__
+logbot/resources/chat/__pycache__

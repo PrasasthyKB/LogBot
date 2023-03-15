@@ -1,6 +1,7 @@
 from flask import  request,  Response, abort
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
+# from flask_caching import Cache
 # project resources
 from models.users import Users
 from models.document import User_Document

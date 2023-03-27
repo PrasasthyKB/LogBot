@@ -9,10 +9,10 @@ import json
 from resources.errors import user_not_found, resource_already_exists
 
 
-class UpdateTag(Resource):
+class GenSumm(Resource):
     @staticmethod
     @jwt_required()
-    def patch() -> Response:
+    def post() -> Response:
         
         authorized: bool = Users.objects.get(id=get_jwt_identity())
         if authorized:
@@ -22,27 +22,18 @@ class UpdateTag(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = ''
-            try: 
-                doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
-            except KeyError:
-                abort(404)
-            print(data["updatetag"])
-            
-            if data["updatetag"] == "True":
-                new_tag_gen = data.get('new_tag')
-                User_Document.objects(document_id=data.get('document_id')).update_one(set__document_tag=new_tag_gen)
+            doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
+            print(data["summarygen"])
+            if data["summarygen"] == "True":
+                User_Document.objects(document_id=data.get('document_id')).update_one(set__document_summary="new summary generated")
                 data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                 data_load_chat['user_id'] = user_details['user_id']
                 data_load_chat['chat_id']= doc_details['chat_id']
-                data_load_chat['query'] = "update tag"
-                data_load_chat['response'] = 'Successfully updated tag for the file'
+                data_load_chat['query'] = "generate summary"
+                data_load_chat['response'] = 'Successfully generated summary for the file'
                 data_load_chat['document_id'] = doc_details['document_id']
                 chat_load = Chat_History(**data_load_chat)
-                try: 
-                    chat_load.save()
-                except KeyError:
-                    abort(400)
+                chat_load.save()
             query = []
             response = []
             timestamp_sort = []
@@ -72,5 +63,6 @@ class UpdateTag(Resource):
                     'doc_summaries': doc_details['document_summary'],
                     'doc_tag': doc_details['document_tag'],
                     'doc_timestamp' : doc_details['timestamp'] }
-                }  
+                } 
         return Response(json.dumps(session_response), 200)
+    

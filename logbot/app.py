@@ -2,7 +2,6 @@ from flask import Flask, app
 from flask_restful import Api
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
-from flask_caching import Cache
 import os
 
 # routes
@@ -13,12 +12,6 @@ default_config = { 'MONGODB_SETTINGS': {
     'host': 'mongodb://128.214.254.176/logbotdatabase',
     'port': 9005   
 }, 'JWT_SECRET_KEY': 'changeThisKeyFirst'}
-
-cache_config = {
-    "CACHE_TYPE": "FileSystemCache",  # Flask-Caching related configs
-    "CACHE_DEFAULT_TIMEOUT": 300,
-    "CACHE_DIR": "cache"
-}
 
 def get_flask_app(config: dict = None) -> app.Flask:
     """
@@ -37,14 +30,10 @@ def get_flask_app(config: dict = None) -> app.Flask:
     if 'JWT_SECRET_KEY' in os.environ:
         flask_app.config['JWT_SECRET_KEY'] = os.environ['JWT_SECRET_KEY']
 
-    # init flask cache
-    cache = Cache(config=cache_config, app=flask_app)
-    cache.init_app(flask_app)
-    
     # init api and routes
     api = Api(app=flask_app)
     create_routes(api=api)
-    
+
     # init mongoengine
     db = MongoEngine()
     db.init_app(flask_app)

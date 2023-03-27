@@ -34,12 +34,7 @@ class QueriesRes(Resource):
             data_load_chat['response'] = doc_details['responses']
             data_load_chat['document_id'] = str(uuid.uuid4())
             chat_load = Chat_History(**data_load_chat)
-            
-            try:
-                chat_load.save()
-            except KeyError:
-                abort(400)
-            
+            chat_load.save()
             query = []
             response = []
             timestamp_sort = []

@@ -25,8 +25,9 @@ class SignUp(Resource):
             user_id =str(uuid.uuid4()) +"LOGIN"
             data['user_id'] = user_id
             new_user = Users(**data)
-            new_user.save()  
-        except Exception:
+            new_user.save()
+            
+        except KeyError:
             abort(400)
         try:
 

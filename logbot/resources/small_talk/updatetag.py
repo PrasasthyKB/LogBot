@@ -22,11 +22,7 @@ class UpdateTag(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = ''
-            try: 
-                doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
-            except KeyError:
-                abort(404)
+            doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
             print(data["updatetag"])
             
             if data["updatetag"] == "True":
@@ -39,10 +35,7 @@ class UpdateTag(Resource):
                 data_load_chat['response'] = 'Successfully updated tag for the file'
                 data_load_chat['document_id'] = doc_details['document_id']
                 chat_load = Chat_History(**data_load_chat)
-                try: 
-                    chat_load.save()
-                except KeyError:
-                    abort(400)
+                chat_load.save()
             query = []
             response = []
             timestamp_sort = []

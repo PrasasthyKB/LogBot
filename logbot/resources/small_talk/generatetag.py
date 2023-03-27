@@ -22,13 +22,7 @@ class GenTag(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = ''
-            
-            try: 
-                doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
-            except KeyError:
-                abort(404)
-                
+            doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
             print(data["taggen"])
             if data["taggen"] == "True":
                 User_Document.objects(document_id=data.get('document_id')).update_one(set__document_tag="No-anomaly")

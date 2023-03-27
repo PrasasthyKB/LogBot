@@ -28,16 +28,8 @@ class DelDoc(Resource):
             
             if doc_count != 0:
                 if data["deletedoc"] == "True":
-                    try:
-                        User_Document.objects(document_id=data.get('document_id')).delete()
-                    except KeyError:
-                        abort(404)
-                    
-                    try:
-                        Chat_History.objects(document_id=data.get('document_id')).delete()
-                    except KeyError:
-                        abort(404)
-                    
+                    User_Document.objects(document_id=data.get('document_id')).delete()
+                    Chat_History.objects(document_id=data.get('document_id')).delete()
                     data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                     data_load_chat['user_id'] = user_details['user_id']
                     data_load_chat['chat_id']=  str(uuid.uuid4()) +"CHAT"
@@ -45,16 +37,10 @@ class DelDoc(Resource):
                     data_load_chat['response'] = "Document with document id " + data.get('document_id') + ' and corresponding chat history deleted'
                     data_load_chat['document_id'] = str(uuid.uuid4())
                     chat_load = Chat_History(**data_load_chat)
-                    
-                    try:
-                        chat_load.save()
-                    except KeyError:
-                        abort(400)
-                    
+                    chat_load.save()
                     query = []
                     response = []
                     timestamp_sort = []
-                    
                     for chat in Chat_History.objects(user_id = user_details['user_id']):
                         chat_details = (json.loads((chat).to_json()))
                         query.append(chat_details['query'])
@@ -91,12 +77,7 @@ class DelDoc(Resource):
                    data_load_chat['response'] = 'Document and chat history already deleted'
                    data_load_chat['document_id'] = str(uuid.uuid4())
                    chat_load = Chat_History(**data_load_chat)
-                   
-                   try:
-                        chat_load.save()
-                   except KeyError:
-                        abort(400)
-                        
+                   chat_load.save()
                    query = []
                    response = []
                    timestamp_sort = []

@@ -22,11 +22,7 @@ class UpdateSum(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = ''
-            try: 
-                doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
-            except KeyError:
-                abort(404)
+            doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
             print(data["updatesum"])
             
             if data["updatesum"] == "True":
@@ -39,10 +35,7 @@ class UpdateSum(Resource):
                 data_load_chat['response'] = 'Successfully updated summary for the file'
                 data_load_chat['document_id'] = doc_details['document_id']
                 chat_load = Chat_History(**data_load_chat)
-                try: 
-                    chat_load.save()
-                except KeyError:
-                    abort(400)
+                chat_load.save()
             query = []
             response = []
             timestamp_sort = []
@@ -55,13 +48,7 @@ class UpdateSum(Resource):
             doc_summary = []
             doc_tag = []
             doc_timestamp = []
-            
-            all_docs = User_Document.objects(user_id = user_details['user_id'])
-            
-            if all_docs is None:
-                abort(400)
-            
-            for doc in all_docs:
+            for doc in User_Document.objects(user_id = user_details['user_id']):
                 doc_details = (json.loads((doc).to_json()))
                 doc_name.append(doc_details['document_name'])
                 doc_summary.append(doc_details['document_summary'])

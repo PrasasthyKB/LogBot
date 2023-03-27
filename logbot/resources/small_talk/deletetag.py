@@ -27,12 +27,7 @@ class DelTag(Resource):
                 if doc_count == 0:
                     session_response = {'message' : "Document doesn't exist"}
                 else:
-                    doc_details = ''
-                    try: 
-                        doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
-                    except KeyError:
-                        abort(404)
-                        
+                    doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
                     if doc_details['document_tag'] == "No tag generation requested":
                         data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                         data_load_chat['user_id'] = user_details['user_id']
@@ -41,10 +36,7 @@ class DelTag(Resource):
                         data_load_chat['response'] = 'Tag already deleted'
                         data_load_chat['document_id'] = doc_details['document_id']
                         chat_load = Chat_History(**data_load_chat)
-                        try: 
-                            chat_load.save()
-                        except KeyError:
-                            abort(400)
+                        chat_load.save()
                         query = []
                         response = []
                         timestamp_sort = []
@@ -84,10 +76,7 @@ class DelTag(Resource):
                         data_load_chat['response'] = 'Successfully deleted tag for the file. Request for new tag'
                         data_load_chat['document_id'] = doc_details['document_id']
                         chat_load = Chat_History(**data_load_chat)
-                        try: 
-                            chat_load.save()
-                        except KeyError:
-                            abort(400)
+                        chat_load.save()
                         query = []
                         response = []
                         timestamp_sort = []

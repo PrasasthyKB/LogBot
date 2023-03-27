@@ -1,4 +1,4 @@
-from flask import  request,  jsonify, Response, abort
+from flask import  request,  jsonify, Response
 from werkzeug.utils import secure_filename
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -47,10 +47,7 @@ class UploadFile(Resource):
                 data_load['document_summary'] = "No summary generation requested"
                 data_load['document_tag'] = "No tag generation requested"
                 doc_load = User_Document(**data_load)
-                try:
-                    doc_load.save()
-                except KeyError:
-                    abort(400)
+                doc_load.save()
                 data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                 data_load_chat['user_id'] = user_details['user_id']
                 data_load_chat['chat_id']= data_load['chat_id']
@@ -58,10 +55,7 @@ class UploadFile(Resource):
                 data_load_chat['response'] = 'File successfully uploaded. Opt for Summary and classification tag generation'
                 data_load_chat['document_id'] = data_load['document_id']
                 chat_load = Chat_History(**data_load_chat)
-                try:
-                    chat_load.save()
-                except KeyError:
-                    abort(400)
+                chat_load.save()
                 query = []
                 response = []
                 timestamp_sort = []

@@ -1,17 +1,17 @@
 from flask_restful import Api
 # Project Resources
-from resources.user.authentication import SignUp, Login
-from resources.user.actions import UserApi
-from resources.document.uploaddocument import UploadFile
-from resources.document.generatesummary import GenSumm
-from resources.small_talk.generatetag import GenTag
-from resources.document.deletedocall import DelDoc
-from resources.document.deletesum import DelSumm
-from resources.small_talk.deletetag import DelTag
-from resources.chat.reloaddocchat import ReloadDoc
-from resources.document.updatesum import UpdateSum
-from resources.small_talk.updatetag import UpdateTag
-from resources.chat.chatwindowQ import QueriesRes
+from resources.authentication import SignUp, Login
+from resources.actions import UserApi
+from resources.uploaddocument import UploadFile
+from resources.generatesummary import GenSumm
+from resources.generatetag import GenTag
+from resources.deletedocall import DelDoc
+from resources.deletesum import DelSumm
+from resources.deletetag import DelTag
+from resources.reloaddocchat import ReloadDoc
+from resources.updatesum import UpdateSum
+from resources.updatetag import UpdateTag
+from resources.chatwindowQ import QueriesRes
 
 def create_routes(api: Api):
     """

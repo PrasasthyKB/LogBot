@@ -2,3 +2,4 @@ logbot/__pycache__
 logbot/resources/__pycache__
 logbot/models/__pycache__
 logbot/db/__pycache__
+logbot/cache

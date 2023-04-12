@@ -1,6 +1,9 @@
-from mongoengine import ( Document, StringField, DateTimeField,)
-import datetime
+"""
+This module defines the chat history table in the mongo database
 
+"""
+import datetime
+from mongoengine import ( Document, StringField, DateTimeField,)
 
 class Chat_History(Document):
     """
@@ -12,16 +15,11 @@ class Chat_History(Document):
     :param response: chatbot response
     :param documentId: document id
     :param timestamp: timestamp of entry
-    """
-    
+    """  
     user_id = StringField(required=True)
     chat_id = StringField(required=True)
     query = StringField(required=False)
     response = StringField(required=True)
     document_id = StringField(required=False)
     timestamp = DateTimeField(default=datetime.datetime.utcnow)
-
-    
-    
-    
     

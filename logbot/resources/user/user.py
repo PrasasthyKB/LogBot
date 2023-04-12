@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 # project resources
 from models.users import Users
-from resources.errors import user_not_found, resource_already_exists
+from utils.errors import user_not_found
 
 class UserApi(Resource):
     """

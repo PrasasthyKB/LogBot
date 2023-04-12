@@ -6,13 +6,13 @@ from models.users import Users
 from models.document import User_Document
 from models.chat_history import Chat_History
 import json
-from resources.errors import user_not_found, resource_already_exists
+from utils.errors import user_not_found, resource_already_exists
 
 
-class GenSumm(Resource):
+class UpdateTag(Resource):
     @staticmethod
     @jwt_required()
-    def post() -> Response:
+    def patch() -> Response:
         
         authorized: bool = Users.objects.get(id=get_jwt_identity())
         if authorized:
@@ -23,14 +23,16 @@ class GenSumm(Resource):
                 abort(415)
             data = request.get_json()
             doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
-            print(data["summarygen"])
-            if data["summarygen"] == "True":
-                User_Document.objects(document_id=data.get('document_id')).update_one(set__document_summary="new summary generated")
+            print(data["updatetag"])
+            
+            if data["updatetag"] == "True":
+                new_tag_gen = data.get('new_tag')
+                User_Document.objects(document_id=data.get('document_id')).update_one(set__document_tag=new_tag_gen)
                 data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                 data_load_chat['user_id'] = user_details['user_id']
                 data_load_chat['chat_id']= doc_details['chat_id']
-                data_load_chat['query'] = "generate summary"
-                data_load_chat['response'] = 'Successfully generated summary for the file'
+                data_load_chat['query'] = "update tag"
+                data_load_chat['response'] = 'Successfully updated tag for the file'
                 data_load_chat['document_id'] = doc_details['document_id']
                 chat_load = Chat_History(**data_load_chat)
                 chat_load.save()
@@ -63,6 +65,5 @@ class GenSumm(Resource):
                     'doc_summaries': doc_details['document_summary'],
                     'doc_tag': doc_details['document_tag'],
                     'doc_timestamp' : doc_details['timestamp'] }
-                } 
+                }  
         return Response(json.dumps(session_response), 200)
-    

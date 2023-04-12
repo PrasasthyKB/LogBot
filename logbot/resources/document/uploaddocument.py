@@ -9,7 +9,7 @@ from models.chat_history import Chat_History
 import json
 import uuid
 import textract
-from resources.errors import user_not_found, resource_already_exists
+from utils.errors import user_not_found, resource_already_exists
 ALLOWED_EXTENSIONS = set(['txt'])
 
 

@@ -3,7 +3,7 @@ from flask_restful import Resource
 import json
 from models.users import Users
 from flask_jwt_extended import create_access_token, create_refresh_token
-from resources.errors import unauthorized
+from utils.errors import unauthorized
 from models.chat_history import Chat_History
 from models.document import User_Document
 import datetime

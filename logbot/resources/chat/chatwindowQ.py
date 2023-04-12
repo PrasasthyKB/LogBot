@@ -8,7 +8,7 @@ from models.chat_history import Chat_History
 from models.document import User_Document
 import json
 import uuid
-from resources.errors import user_not_found, resource_already_exists
+from utils.errors import user_not_found, resource_already_exists
 
 
 class QueriesRes(Resource):

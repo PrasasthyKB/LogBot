@@ -3,7 +3,7 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 # project resources
 from models.users import Users
-from models.document import User_Document
+from models.document import LogFile
 from models.chat_history import Chat_History
 import json
 from utils.errors import user_not_found, resource_already_exists
@@ -22,10 +22,10 @@ class GenSumm(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
+            doc_details = json.loads(LogFile.objects.get(document_id=data.get('document_id')).to_json())
             print(data["summarygen"])
             if data["summarygen"] == "True":
-                User_Document.objects(document_id=data.get('document_id')).update_one(set__document_summary="new summary generated")
+                LogFile.objects(document_id=data.get('document_id')).update_one(set__document_summary="new summary generated")
                 data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                 data_load_chat['user_id'] = user_details['user_id']
                 data_load_chat['chat_id']= doc_details['chat_id']
@@ -46,7 +46,7 @@ class GenSumm(Resource):
             doc_summary = []
             doc_tag = []
             doc_timestamp = []
-            for doc in User_Document.objects(user_id = user_details['user_id']):
+            for doc in LogFile.objects(user_id = user_details['user_id']):
                 doc_details = (json.loads((doc).to_json()))
                 doc_name.append(doc_details['document_name'])
                 doc_summary.append(doc_details['document_summary'])

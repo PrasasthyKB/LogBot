@@ -4,7 +4,7 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 # project resources
 from models.users import Users
-from models.document import User_Document
+from models.document import LogFile
 from models.chat_history import Chat_History
 import json
 import uuid
@@ -46,7 +46,7 @@ class UploadFile(Resource):
                 data_load['document'] = str(textract.process(filename, encoding='ascii'), 'ascii')
                 data_load['document_summary'] = "No summary generation requested"
                 data_load['document_tag'] = "No tag generation requested"
-                doc_load = User_Document(**data_load)
+                doc_load = LogFile(**data_load)
                 doc_load.save()
                 data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                 data_load_chat['user_id'] = user_details['user_id']
@@ -68,7 +68,7 @@ class UploadFile(Resource):
                 doc_summary = []
                 doc_tag = []
                 doc_timestamp = []
-                for doc in User_Document.objects(user_id = user_details['user_id']):
+                for doc in LogFile.objects(user_id = user_details['user_id']):
                     doc_details = (json.loads((doc).to_json()))
                     doc_name.append(doc_details['document_name'])
                     doc_summary.append(doc_details['document_summary'])

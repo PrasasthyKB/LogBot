@@ -3,7 +3,7 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 # project resources
 from models.users import Users
-from models.document import User_Document
+from models.document import LogFile
 from models.chat_history import Chat_History
 import json
 import uuid
@@ -24,11 +24,11 @@ class DelDoc(Resource):
                 abort(415)
                 
             data = request.get_json()
-            doc_count = User_Document.objects(document_id=data.get('document_id')).count()
+            doc_count = LogFile.objects(document_id=data.get('document_id')).count()
             
             if doc_count != 0:
                 if data["deletedoc"] == "True":
-                    User_Document.objects(document_id=data.get('document_id')).delete()
+                    LogFile.objects(document_id=data.get('document_id')).delete()
                     Chat_History.objects(document_id=data.get('document_id')).delete()
                     data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
                     data_load_chat['user_id'] = user_details['user_id']
@@ -50,7 +50,7 @@ class DelDoc(Resource):
                     doc_summary = []
                     doc_tag = []
                     doc_timestamp = []
-                    for doc in User_Document.objects(user_id = user_details['user_id']):
+                    for doc in LogFile.objects(user_id = user_details['user_id']):
                         doc_details = (json.loads((doc).to_json()))
                         doc_name.append(doc_details['document_name'])
                         doc_summary.append(doc_details['document_summary'])
@@ -90,7 +90,7 @@ class DelDoc(Resource):
                    doc_summary = []
                    doc_tag = []
                    doc_timestamp = []
-                   for doc in User_Document.objects(user_id = user_details['user_id']):
+                   for doc in LogFile.objects(user_id = user_details['user_id']):
                        doc_details = (json.loads((doc).to_json()))
                        doc_name.append(doc_details['document_name'])
                        doc_summary.append(doc_details['document_summary'])

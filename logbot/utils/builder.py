@@ -12,7 +12,7 @@ from constants import MASON, ERROR_PROFILE
 from models.users import Users
 from models.document import LogFile
 from models.chat_history import Chat_History
-from models.small_talk import Small_Talk
+from models.smalltalk import SmallTalk
 
 
 # Provided in Exercise 3 material on Lovelace
@@ -142,50 +142,16 @@ class LogBotBuilder(MasonBuilder):
     Extends MasonBuilder to expose utility control functions specific to logbot.
     """
 
-    def add_control_all_courses(self):
-        """
-        Adds a control that points to the collection of all courses with GET method.
-        """
-        self.add_control(
-            "logbot:logs-all",
-            url_for("api.coursecollection"),
-            method="GET",
-            title="The collection of all courses"
-        )
-
-    def add_control_all_assessments(self):
-        """
-        Adds a control that points to the collection of all assessments with GET method.
-        """
-        self.add_control(
-            "studman:assessments-all",
-            url_for('api.assessmentcollection'),
-            method="GET",
-            title="The collection of all assessments"
-        )
-
     def add_control_add_log(self):
         """
         Adds a control that allows to add a logfile, points to DocumentCollection with POST method.
         Contains the schema for a valid POST request of a logfile.
         """
         self.add_control_post(
-            "studman:add-student",
+            "logbot:add-logfile",
             "Add a new student",
-            url_for('api.studentcollection'),
-            Student.json_schema()
-        )
-
-    def add_control_add_course(self):
-        """
-        Adds a control that allows to add a course, points to CourseCollection with POST method.
-        Contains the schema for a valid POST request of a course.
-        """
-        self.add_control_post(
-            "studman:add-course",
-            "Add a new course",
-            url_for('api.coursecollection'),
-            Course.json_schema()
+            url_for('api.addLogFile'),
+            LogFile.json_schema()
         )
 
     def add_control_get_user(self, user):
@@ -194,8 +160,8 @@ class LogBotBuilder(MasonBuilder):
         :param student: database instance of the student for which to generate the URL.
         """
         self.add_control(
-            "studman:student",
-            url_for('api.studentitem', user=user),
+            "logbot:user",
+            url_for('api.userItem', user=user),
             method="GET",
             title="Get the student this assessment is assigned to"
         )
@@ -207,7 +173,7 @@ class LogBotBuilder(MasonBuilder):
         """
         self.add_control(
             "logbot:log",
-            url_for('api.courseitem', course=log),
+            url_for('api.logFile', course=log),
             method="GET",
             title="Get the logfile"
         )
@@ -219,7 +185,19 @@ class LogBotBuilder(MasonBuilder):
         """
         self.add_control(
             "logbot:logs-all",
-            url_for('api.studentassessmentcollection', user=user),
+            url_for('api.userLogFiles', user=user),
+            method="GET",
+            title="Get all the logs of a user"
+        )
+
+    def add_control_user_log_chat(self, log):
+        """
+        Adds a control that points to the collection of a users logfiles with GET method.
+        :param user: database instance of the user for which to get the logfiles.
+        """
+        self.add_control(
+            "logbot:user-logchat",
+            url_for('api.userLogFiles', log=log),
             method="GET",
             title="Get all the logs of a user"
         )

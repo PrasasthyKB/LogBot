@@ -3,7 +3,7 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 # project resources
 from models.users import Users
-from models.document import User_Document
+from models.document import LogFile
 from models.chat_history import Chat_History
 import json
 from utils.errors import user_not_found, resource_already_exists
@@ -22,7 +22,7 @@ class ReloadDoc(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = json.loads(User_Document.objects.get(document_id=data.get('document_id')).to_json())
+            doc_details = json.loads(LogFile.objects.get(document_id=data.get('document_id')).to_json())
             
             print(data["reloaddocchat"])
             query = []

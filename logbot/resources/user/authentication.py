@@ -5,7 +5,7 @@ from models.users import Users
 from flask_jwt_extended import create_access_token, create_refresh_token
 from utils.errors import unauthorized
 from models.chat_history import Chat_History
-from models.document import User_Document
+from models.document import LogFile
 import datetime
 import uuid
 
@@ -73,7 +73,7 @@ class Login(Resource):
         doc_name = []
         doc_summary = []
         doc_tag = []
-        for doc in User_Document.objects(user_id = user_id):
+        for doc in LogFile.objects(user_id = user_id):
             doc_details = (json.loads((doc).to_json()))
             doc_name.append(doc_details['document_name'])
             doc_summary.append(doc_details['document_summary'])

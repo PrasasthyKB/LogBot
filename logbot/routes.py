@@ -21,8 +21,8 @@ def create_routes(api: Api):
     """
     
     # User Authentication 
-    api.add_resource(SignUp, '/authentication/signup/')
-    api.add_resource(Login, '/authentication/login/')
+    api.add_resource(SignUp, '/authentication/issueToken/')
+    api.add_resource(Login, '/authentication/accessToken/')
 
     # Platform Users
     api.add_resource(UserApi, '/actions/user_action')

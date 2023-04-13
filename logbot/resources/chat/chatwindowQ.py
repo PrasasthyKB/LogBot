@@ -3,9 +3,9 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 # project resources
 from models.users import Users
-from models.small_talk import Small_Talk
+from models.smalltalk import SmallTalk
 from models.chat_history import Chat_History
-from models.document import User_Document
+from models.document import LogFile
 import json
 import uuid
 from utils.errors import user_not_found, resource_already_exists
@@ -24,7 +24,7 @@ class QueriesRes(Resource):
             if not request.json:
                 abort(415)
             data = request.get_json()
-            doc_details = json.loads(Small_Talk.objects.get(patterns=data.get('Query')).to_json())
+            doc_details = json.loads(SmallTalk.objects.get(patterns=data.get('Query')).to_json())
             
             
             data_load_chat = {"user_id": [], "chat_id":[],"query":[],"response":[], 'document_id' : []}
@@ -47,7 +47,7 @@ class QueriesRes(Resource):
             doc_summary = []
             doc_tag = []
             doc_timestamp = []
-            for doc in User_Document.objects(user_id = user_details['user_id']):
+            for doc in LogFile.objects(user_id = user_details['user_id']):
                 doc_details = (json.loads((doc).to_json()))
                 doc_name.append(doc_details['document_name'])
                 doc_summary.append(doc_details['document_summary'])

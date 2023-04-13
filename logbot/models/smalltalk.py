@@ -7,7 +7,7 @@ The functions are responsible for initiliazing and populating the database and r
 
 from mongoengine import ( Document, StringField, ListField)
 
-class Small_Talk(Document):
+class SmallTalk(Document):
     """
     Template for a mongoengine document, which represents a user.
     Password is automatically hashed before saving.

@@ -1,6 +1,12 @@
+"""
+This module contains the Model class for our users, and click functions callable
+    from the command line
+
+The functions are responsible for initiliazing and populating the database and running the tests
+"""
+import datetime
 from mongoengine import ( Document, StringField, EmailField, DateTimeField,)
 from flask_bcrypt import generate_password_hash, check_password_hash
-import datetime
 
 class Users(Document):
     """
@@ -16,13 +22,56 @@ class Users(Document):
     name = StringField(unique=False)
     timestamp = DateTimeField(default=datetime.datetime.utcnow)
 
+    # JSON SCHEMA
+    @staticmethod
+    def json_schema():
+        """
+        :return: the valid JSON schema for the Assessment class
+        """
+        schema = {
+            "type": "object",
+            "required": ["user_id","email", "password", "name", "timestamp"]
+        }
+        props = schema["properties"] = {}
+        props["user_id"] = {
+            "description": "User Identifier",
+            "type": "string",
+        }
+        props["email"] = {
+            "description": "User email",
+            "type": "string",
+        }
+        props["password"] = {
+            "description": "User password",
+            "type": "string"
+        }
+        props["name"] = {
+            "description": "User name",
+            "type": "string",
+        }
+        props["timestamp"] = {
+            "description": "Timestamp of document/logfile marking in format yyyy-mm-dd",
+            "type": "string",
+            "format": "date-time"
+        }
+        return schema
+    
+
     def generate_pw_hash(self):
+        """
+        Function to hash the user password
+        
+        """
         self.password = generate_password_hash(password=self.password).decode('utf-8')
     
     #BCrypt for password hashing
     generate_pw_hash.__doc__ = generate_password_hash.__doc__
 
     def check_pw_hash(self, password: str) -> bool:
+        """
+        Function to check the hash of the user entered password
+        
+        """
         return check_password_hash(pw_hash=self.password, password=password)
     
     #BCrypt for password hashing

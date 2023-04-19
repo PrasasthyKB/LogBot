@@ -24,7 +24,19 @@ class Chat_History(Document):
     query = StringField(required=False)
     response = StringField(required=True)
     document_id = StringField(required=False)
-    timestamp = DateTimeField(default=datetime.datetime.utcnow)
+    timestamp = DateTimeField(default=datetime.datetime.utcnow())
+
+    def deserialize(self, doc):
+        """
+        Deserialize a json file converting each field in one of the field of a LogFile object
+        :param doc: Json file
+        """
+        self.user_id = doc["user_id"]
+        self.chat_id = doc["chat_id"]
+        self.query = doc["query"]
+        self.response = doc["response"]
+        self.document_id = doc["document_id"]
+        self.timestamp = datetime.datetime.utcnow()
 
     # JSON SCHEMA
     @staticmethod

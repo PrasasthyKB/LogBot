@@ -10,3 +10,4 @@ MASON = "application/vnd.mason+json"
 ERROR_PROFILE = "/logbot/error/"
 
 LINK_RELATIONS_URL = "/logbot/link-relations/"
+ALLOWED_EXTENSIONS = set(['txt'])

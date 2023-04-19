@@ -53,8 +53,7 @@ class Login(Resource):
     @staticmethod
     def post() -> Response:
         """
-        POST response method for retrieving user web token.
-        :return: JSON object
+        User authenticate method.
         """
         if not request.json:
             abort(415)

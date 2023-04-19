@@ -13,23 +13,99 @@ components:
       schema:
         type: string
   schemas:
-    Product:
+    User:
       properties:
-        weight:
-          description: Document summary
-          type: number
-        price:
-          description: Document tag
-          type: number
+        user_id:
+          description: user ID
+          type: string
+        email:
+          description: email
+          type: string
+        password:
+          description: password
+          type: string
+        name:
+          description: name
+          type: string
+        timestamp:
+          description: timestamp
+          type: Datetime
       required:
-      - handle
-      - weight
-      - price
+      - user_id
+      - email
+      - password
+      type: object
+    LogFile:
+      properties:
+        user_id:
+          description: Document summary
+          type: string
+        document_id:
+          description: Document ID
+          type: string
+        document_name:
+          description: Document Name
+          type: string
+        chat_id:
+          description: Chat ID
+          type: string
+        document:
+          description: LogFile
+          type: string
+        document_summary:
+          description: Document Summary
+          type: string
+        document_tag:
+          description: Document tag
+          type: string
+        timestamp:
+          description: timestamp
+          type: Datetime
+      required:
+      - user_id
+      - document_id
+      - document_name
+      - chat_id
+      - document_tag
+      type: object
+    Small-Talk:
+      properties:
+        patterns:
+          description: Small Talk Patterns
+          type: array
+        responses:
+          description: Document tag
+          type: array
+      type: object
+    Chat:
+      properties:
+        user_id:
+          description: Document summary
+          type: string
+        document_id:
+          description: Document ID
+          type: string
+        chat_id:
+          description: Chat ID
+          type: string
+        query:
+          description: Query for LogBot
+          type: string
+        response:
+          description: Chat ID
+          type: string
+        timestamp:
+          description: timestamp
+          type: Datetime
+      required:
+      - user_id
+      - chat_id
+      - response
       type: object
   securitySchemes:
-    producthubKey:
+    logBotKey:
       type: apiKey
-      name: Producthub-Api-Key
+      name: x-access-token
       in: header
 info:
   title: Producthub Example
@@ -45,45 +121,3 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-paths:
-  /products/:
-    get:
-      description: Get the list of managed Products and information
-      responses:
-        '200':
-          description: List of Products with info
-          content:
-            application/json:
-              example:
-              - handle: test-product-1
-                weight: 55
-                price: 5
-              - handle: test-product-2
-                weight: 55
-                price: 5
-    post:
-      description: Create a new product
-      requestBody:
-        description: JSON document that contains basic data for a new product
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
-            example:
-              handle: new-test-product-1
-              weight: 55
-              price: 5
-      responses:
-        '201':
-          description: The product was created successfully
-          headers:
-            Location: 
-              description: URI of the new product
-              schema: 
-                type: string
-        '400':
-          description: The request body was not valid
-        '409':
-          description: A product with the same handle already exists
-        '415':
-          description: Wrong media type was used

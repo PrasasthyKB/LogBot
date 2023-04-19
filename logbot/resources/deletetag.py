@@ -12,7 +12,24 @@ class DelTag(Resource):
     @staticmethod
     @jwt_required()
     def delete() -> Response:
-        
+        """
+        Delete Tag
+        ---
+        responses:
+          200:
+            description: Tag Successfully deleted
+            schema:
+              id: User
+              properties:
+                username:
+                  type: string
+                  description: The name of the user
+                  default: Steven Wilson
+          404:
+            description: Resource not found
+          415:
+            description: Missing Request body
+        """
         authorized: bool = Users.objects.get(id=get_jwt_identity())
         if authorized:
             user_details= json.loads(Users.objects.get(id=get_jwt_identity()).to_json())

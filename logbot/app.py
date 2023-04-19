@@ -33,7 +33,7 @@ def get_flask_app(config: dict = None) -> app.Flask:
 
     # init api and routes
     api = Api(app=flask_app)
-    swagger = Swagger(flask_app)
+    swagger = Swagger(app=flask_app, template_file="doc/Document.yml")
     create_routes(api=api)
 
     # init mongoengine

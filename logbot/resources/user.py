@@ -13,17 +13,11 @@ class UserApi(Resource):
     @jwt_required()
     def get(self, user_id: str) -> Response:
         """
-        This examples uses FlaskRESTful Resource
-        It works also with swag_from, schemas and spec_dict
+        Return the user profile corresponding to this user_id
         ---
-        parameters:
-          - in: path
-            name: username
-            type: string
-            required: true
         responses:
           200:
-            description: A single user item
+            description: Success
             schema:
               id: User
               properties:
@@ -31,6 +25,10 @@ class UserApi(Resource):
                   type: string
                   description: The name of the user
                   default: Steven Wilson
+          404:
+            description: Resource not found
+          415:
+            description: Missing Request body
         """
         authorized = Users.objects.get(id=get_jwt_identity())
 

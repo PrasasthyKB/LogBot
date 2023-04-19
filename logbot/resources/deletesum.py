@@ -12,7 +12,24 @@ class DelSumm(Resource):
     @staticmethod
     @jwt_required()
     def delete() -> Response:
-        
+        """
+        Delete a LogFile Summary
+        ---
+        responses:
+          200:
+            description: Summary deleted
+            schema:
+              id: User
+              properties:
+                username:
+                  type: string
+                  description: The name of the user
+                  default: Steven Wilson
+          404:
+            description: Resource not found
+          415:
+            description: Missing Request body
+        """
         authorized: bool = Users.objects.get(id=get_jwt_identity())
         if authorized:
             user_details= json.loads(Users.objects.get(id=get_jwt_identity()).to_json())

@@ -1,8 +1,9 @@
+import os
 from flask import Flask, app
 from flask_restful import Api
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
-import os
+from flasgger import Swagger
 
 # routes
 from routes import create_routes
@@ -32,6 +33,7 @@ def get_flask_app(config: dict = None) -> app.Flask:
 
     # init api and routes
     api = Api(app=flask_app)
+    swagger = Swagger(flask_app)
     create_routes(api=api)
 
     # init mongoengine

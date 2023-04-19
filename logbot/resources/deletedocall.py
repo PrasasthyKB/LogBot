@@ -13,6 +13,20 @@ class DelDoc(Resource):
     @staticmethod
     @jwt_required()
     def delete() -> Response:
+        """
+        Delete an uploaded LogFile
+        ---
+        responses:
+          200:
+            description: A single user item
+            schema:
+              id: User
+              properties:
+                username:
+                  type: string
+                  description: The name of the user
+                  default: Steven Wilson
+        """
         
         authorized: bool = Users.objects.get(id=get_jwt_identity())
         

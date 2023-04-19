@@ -13,9 +13,24 @@ class UserApi(Resource):
     @jwt_required()
     def get(self, user_id: str) -> Response:
         """
-        GET response method for acquiring single user data.
-        JSON Web Token is required.
-        :return: JSON object
+        This examples uses FlaskRESTful Resource
+        It works also with swag_from, schemas and spec_dict
+        ---
+        parameters:
+          - in: path
+            name: username
+            type: string
+            required: true
+        responses:
+          200:
+            description: A single user item
+            schema:
+              id: User
+              properties:
+                username:
+                  type: string
+                  description: The name of the user
+                  default: Steven Wilson
         """
         authorized = Users.objects.get(id=get_jwt_identity())
 

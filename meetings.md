@@ -4,7 +4,7 @@
 * **DATE:** 06 - Feb - 2023 
 * **ASSISTANTS:** Ivan Sanchez Milara
 
-### Minutes
+#### Minutes
 *Summary of what was discussed during the meeting*
 - The following individuals attended the meeting: Justin Seby, Prasasthy Balasubramanian. 
 - The tasks for Deadline 1 have been completed by the group. 
